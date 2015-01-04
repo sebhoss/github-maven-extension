@@ -37,8 +37,8 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
     public void afterProjectsRead(final MavenSession session) throws MavenExecutionException {
         project = session.getCurrentProject();
 
-        updateProject();
         updateOrganization();
+        updateProject();
         updateIssueManagement();
         updateScm();
         updateCiManagement();
@@ -52,10 +52,14 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
     }
 
     private void updateOrganization() {
-        final Organization organization = project.getOrganization();
+        Organization organization = project.getOrganization();
+        if (organization == null) {
+            organization = new Organization();
+        }
         if (organization.getUrl() == null || organization.getUrl().isEmpty()) {
             organization.setUrl(getProperty(Constants.ORGANIZATION_URL, organization.getName()));
         }
+        project.setOrganization(organization);
     }
 
     private void updateIssueManagement() {

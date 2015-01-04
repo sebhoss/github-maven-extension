@@ -16,7 +16,7 @@
 
   <bannerLeft>
     <name>Maven GitHub Extension</name>
-    <href>http://sebhoss.github.io/maven-github-extension</href>
+    <href>http://sebhoss.github.io/github-maven-extension</href>
   </bannerLeft>
 
   <body>
@@ -32,9 +32,9 @@
       <item name="Releasing" href="development/release"/>
     </menu>
     <menu name="GitHub">
-      <item name="View" href="https://github.com/sebhoss/maven-github-extension/" />
-      <item name="Fork" href="https://github.com/sebhoss/maven-github-extension/fork/"/>
-      <item name="Report new issue" href="https://github.com/sebhoss/maven-github-extension/issues/new/"/>
+      <item name="View" href="https://github.com/sebhoss/github-maven-extension/" />
+      <item name="Fork" href="https://github.com/sebhoss/github-maven-extension/fork/"/>
+      <item name="Report new issue" href="https://github.com/sebhoss/github-maven-extension/issues/new/"/>
     </menu>
 
     <menu ref="reports" inherit="bottom" />

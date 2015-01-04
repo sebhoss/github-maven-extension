@@ -23,11 +23,11 @@
   <!--                               INFORMATIONS                              -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <groupId>com.sebhoss.maven</groupId>
-  <artifactId>maven-github-extension</artifactId>
+  <artifactId>github-maven-extension</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <inceptionYear>2015</inceptionYear>
-  <url>http://sebhoss.github.io/maven-github-extension</url>
+  <url>http://sebhoss.github.io/github-maven-extension</url>
   <name>Maven extension for GitHub</name>
   <description>Configures common settings found in Maven projects on GitHub</description>
 
@@ -35,8 +35,8 @@
   <!--                                  SOURCE                                 -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <scm>
-    <connection>scm:git:git://github.com/sebhoss/maven-github-extension.git</connection>
-    <developerConnection>scm:git:git@github.com:sebhoss/maven-github-extension.git</developerConnection>
+    <connection>scm:git:git://github.com/sebhoss/github-maven-extension.git</connection>
+    <developerConnection>scm:git:git@github.com:sebhoss/github-maven-extension.git</developerConnection>
     <tag>master</tag>
     <url>${project.url}</url>
   </scm>
@@ -46,7 +46,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <issueManagement>
     <system>GitHub</system>
-    <url>https://github.com/sebhoss/maven-github-extension/issues</url>
+    <url>https://github.com/sebhoss/github-maven-extension/issues</url>
   </issueManagement>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -54,7 +54,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <ciManagement>
     <system>Travis</system>
-    <url>https://travis-ci.org/sebhoss/maven-github-extension</url>
+    <url>https://travis-ci.org/sebhoss/github-maven-extension</url>
   </ciManagement>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -97,6 +97,18 @@
       <groupId>ch.qos.cal10n</groupId>
       <artifactId>cal10n-api</artifactId>
       <version>0.8.1</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>1.10.8</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

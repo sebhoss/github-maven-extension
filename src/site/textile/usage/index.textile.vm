@@ -7,7 +7,7 @@ bc. <build>
     ...
      <extension>
        <groupId>com.sebhoss.maven</groupId>
-       <artifactId>maven-github-extension</artifactId>
+       <artifactId>github-maven-extension</artifactId>
        <version>${project.version}</version>
      </extension>
      ...
