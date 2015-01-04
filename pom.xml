@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright © 2015 Sebastian Hoß <mail@shoss.de>
+    This work is free. You can redistribute it and/or modify it under the
+    terms of the Do What The Fuck You Want To Public License, Version 2,
+    as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!--                                  PARENT                                 -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <parent>
+    <groupId>com.github.sebhoss</groupId>
+    <artifactId>java-parent</artifactId>
+    <version>1.0.11-SNAPSHOT</version>
+  </parent>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!--                               INFORMATIONS                              -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <groupId>com.sebhoss.maven</groupId>
+  <artifactId>maven-github-extension</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <inceptionYear>2015</inceptionYear>
+  <url>http://sebhoss.github.io/maven-github-extension</url>
+  <name>Maven extension for GitHub</name>
+  <description>Configures common settings found in Maven projects on GitHub</description>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!--                                  SOURCE                                 -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <scm>
+    <connection>scm:git:git://github.com/sebhoss/maven-github-extension.git</connection>
+    <developerConnection>scm:git:git@github.com:sebhoss/maven-github-extension.git</developerConnection>
+    <tag>master</tag>
+    <url>${project.url}</url>
+  </scm>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!--                                  ISSUES                                 -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/sebhoss/maven-github-extension/issues</url>
+  </issueManagement>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!--                                    CI                                   -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <ciManagement>
+    <system>Travis</system>
+    <url>https://travis-ci.org/sebhoss/maven-github-extension</url>
+  </ciManagement>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!--                               ORGANIZATION                              -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <organization>
+    <name>sebhoss</name>
+    <url>http://sebhoss.github.io/</url>
+  </organization>
+
+  <distributionManagement>
+    <!-- if no site distribution is specified, the release plugin won't run site-deploy -->
+    <!-- the actual deployment however is done by the github site plugin -->
+    <site>
+      <id>fake</id>
+      <url>file:///fake</url>
+    </site>
+  </distributionManagement>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!--                               DEPENDENCIES                              -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-core</artifactId>
+      <version>3.2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-model</artifactId>
+      <version>3.2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-component-annotations</artifactId>
+      <version>1.6</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.cal10n</groupId>
+      <artifactId>cal10n-api</artifactId>
+      <version>0.8.1</version>
+    </dependency>
+  </dependencies>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!--                                   BUILD                                 -->
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-component-metadata</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate-metadata</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.ning.maven.plugins</groupId>
+        <artifactId>maven-duplicate-finder-plugin</artifactId>
+        <version>1.0.9</version>
+        <configuration>
+          <ignoredResources>
+            <ignoredResource>META-INF/sisu/javax.inject.Named</ignoredResource>
+            <ignoredResource>about.html</ignoredResource>
+          </ignoredResources>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,15 @@
+h1. Usage
+
+p. Declare this project as an build extension inside your projects POM:
+
+bc. <build>
+  <extensions>
+    ...
+     <extension>
+       <groupId>com.sebhoss.maven</groupId>
+       <artifactId>maven-github-extension</artifactId>
+       <version>${project.version}</version>
+     </extension>
+     ...
+  </extensions>
+</build>

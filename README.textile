@@ -1,0 +1,5 @@
+h1. maven-github-extension
+
+h2. "!https://img.shields.io/maven-central/v/com.github.sebhoss/maven-github-extension.svg?style=flat-square!":https://maven-badges.herokuapp.com/maven-central/com.github.sebhoss/maven-github-extension "!https://img.shields.io/travis/sebhoss/maven-github-extension/master.svg?style=flat-square!":http://travis-ci.org/sebhoss/maven-github-extension
+
+p. Configures common settings found in Maven projects on GitHub. For more information take a look at the "project documentation":http://sebhoss.github.io/maven-github-extension

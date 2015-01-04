@@ -1,0 +1,7 @@
+h2. Compatibility
+
+p. This POM declares the following minimum Maven versions:
+
+|_. Maven |_. 1.0.0 | 
+| 3.2.3 | ✓ |
+

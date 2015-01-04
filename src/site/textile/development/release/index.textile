@@ -1,0 +1,3 @@
+h2. Performing a release
+
+p. Execute the following command @mvn -B release:prepare release:perform@.

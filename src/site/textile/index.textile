@@ -1,0 +1,16 @@
+h1. About
+
+p. Configures common settings found in "Maven":http://maven.apache.org/ projects on "GitHub":https://www.github.com/. It automatically sets the following settings:
+
+* @project.url@
+* @project.organization.url@
+* @project.issueManagement.system@
+* @project.issueManagement.url@
+* @project.scm.connection@
+* @project.scm.developerConnection@
+* @project.scm.tag@
+* @project.scm.url@
+* @project.ciManagement.system@
+* @project.ciManagement.url@
+* @project.distributionManagement.site.id@
+* @project.distributionManagement.site.url@
