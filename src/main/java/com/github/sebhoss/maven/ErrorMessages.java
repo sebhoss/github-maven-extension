@@ -20,6 +20,6 @@ public enum ErrorMessages {
     /**
      * Error message signals that no organization name was configured.
      */
-    NO_ORGANIZATION_NAME
+    NO_ORGANIZATION_NAME;
 
 }

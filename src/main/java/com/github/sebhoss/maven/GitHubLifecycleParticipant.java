@@ -11,8 +11,6 @@ import java.util.Locale;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 
-import com.google.common.base.Preconditions;
-
 import org.apache.maven.AbstractMavenLifecycleParticipant;
 import org.apache.maven.MavenExecutionException;
 import org.apache.maven.execution.MavenSession;
@@ -85,7 +83,8 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
         if (scm == null) {
             scm = new Scm();
             scm.setConnection(getProperty(GitHubMessages.SCM_CONNECTION, organizationName(), artifactId()));
-            scm.setDeveloperConnection(getProperty(GitHubMessages.SCM_DEVELOPER_CONNECTION, organizationName(), artifactId()));
+            scm.setDeveloperConnection(getProperty(GitHubMessages.SCM_DEVELOPER_CONNECTION, organizationName(),
+                    artifactId()));
             scm.setTag(getProperty(GitHubMessages.SCM_TAG));
             scm.setUrl(getProperty(GitHubMessages.SCM_URL, organizationName(), artifactId()));
             project.setScm(scm);
@@ -121,7 +120,11 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
     }
 
     private String organizationName() {
-        return Preconditions.checkNotNull(organizationName, getProperty(ErrorMessages.NO_ORGANIZATION_NAME));
+        if (organizationName != null) {
+            return organizationName;
+        }
+
+        throw new NullPointerException(getProperty(ErrorMessages.NO_ORGANIZATION_NAME));
     }
 
     private String artifactId() {

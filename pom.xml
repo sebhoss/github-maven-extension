@@ -95,9 +95,9 @@
     </dependency>
     <dependency>
   <groupId>org.apache.maven.plugin-tools</groupId>
-  <artifactId>maven-plugin-tools-annotations</artifactId>
+  <artifactId>maven-plugin-annotations</artifactId>
   <version>3.3</version>
-</dependency>
+    </dependency>
     <dependency>
       <groupId>ch.qos.cal10n</groupId>
       <artifactId>cal10n-api</artifactId>

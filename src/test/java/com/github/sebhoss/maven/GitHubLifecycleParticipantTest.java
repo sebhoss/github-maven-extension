@@ -11,7 +11,9 @@ import org.apache.maven.execution.MavenSession;
 import org.apache.maven.project.MavenProject;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 
@@ -20,8 +22,14 @@ import org.mockito.Mockito;
  */
 public class GitHubLifecycleParticipantTest {
 
-    private static final String        EXISTING_PROJECT_URL = "EXISTING_PROJECT_URL"; //$NON-NLS-1$
-    private static final String        ORGANIZATION_NAME    = "ORGANIZATION_NAME";   //$NON-NLS-1$
+    private static final String        EXISTING_PROJECT_URL = "EXISTING_PROJECT_URL";                           //$NON-NLS-1$
+    private static final String        ORGANIZATION_NAME    = "ORGANIZATION_NAME";                              //$NON-NLS-1$
+    private static final String        GITHUB_PROJECT_URL   = "http://ORGANIZATION_NAME.github.io/PROJECT_NAME"; //$NON-NLS-1$
+    private static final String        ARTIFACT_ID          = "PROJECT_NAME";                                   //$NON-NLS-1$
+
+    /** Checks thrown exceptions */
+    @Rule
+    public ExpectedException           thrown               = ExpectedException.none();
 
     private GitHubLifecycleParticipant gitHubLifecycleParticipant;
     private MavenSession               mavenSession;
@@ -37,11 +45,14 @@ public class GitHubLifecycleParticipantTest {
 
         mavenSession = Mockito.mock(MavenSession.class);
         mavenProject = new MavenProject();
+        mavenProject.setArtifactId(ARTIFACT_ID);
 
         BDDMockito.given(mavenSession.getCurrentProject()).willReturn(mavenProject);
     }
 
     /**
+     * Checks that an existing project.url is not overwritten.
+     *
      * @throws MavenExecutionException
      *             In case something went wrong with the maven execution
      */
@@ -55,6 +66,72 @@ public class GitHubLifecycleParticipantTest {
 
         // then
         Assert.assertEquals(EXISTING_PROJECT_URL, mavenProject.getUrl());
+    }
+
+    /**
+     * Checks that a project without a project.url is updated with the correct GitHub project URL.
+     *
+     * @throws MavenExecutionException
+     *             In case something went wrong with the maven execution
+     */
+    @Test
+    public void shouldUpdateNonExistingProjectUrl() throws MavenExecutionException {
+        // given
+        mavenProject.setUrl(null);
+
+        // when
+        gitHubLifecycleParticipant.afterProjectsRead(mavenSession);
+
+        // then
+        Assert.assertEquals(GITHUB_PROJECT_URL, mavenProject.getUrl());
+    }
+
+    /**
+     * Checks that a project with an empty project.url is updated with the correct GitHub project URL.
+     *
+     * @throws MavenExecutionException
+     *             In case something went wrong with the maven execution
+     */
+    @Test
+    public void shouldUpdateEmptyProjectUrl() throws MavenExecutionException {
+        // given
+        mavenProject.setUrl(""); //$NON-NLS-1$
+
+        // when
+        gitHubLifecycleParticipant.afterProjectsRead(mavenSession);
+
+        // then
+        Assert.assertEquals(GITHUB_PROJECT_URL, mavenProject.getUrl());
+    }
+
+    /**
+     * Checks that the configured organization name is returned.
+     */
+    @Test
+    public void shouldGetConfigurationOrganizationName() {
+        // when
+        final String organizationName = gitHubLifecycleParticipant.getOrganizationName();
+
+        // then
+        Assert.assertEquals(ORGANIZATION_NAME, organizationName);
+    }
+
+    /**
+     * Checks that the extension can't run without a configured organizatio name.
+     * 
+     * @throws MavenExecutionException
+     *             In case something went wrong with the maven execution
+     */
+    @Test
+    public void shouldThrowNPEWithoutOrganizationName() throws MavenExecutionException {
+        // given
+        gitHubLifecycleParticipant.setOrganizationName(null);
+
+        // when
+        thrown.expect(NullPointerException.class);
+
+        // then
+        gitHubLifecycleParticipant.afterProjectsRead(mavenSession);
     }
 
 }
