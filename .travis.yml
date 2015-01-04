@@ -1,8 +1,24 @@
 language: java
+
 jdk:
 - oraclejdk8
+
 after_success:
 - mvn clean test jacoco:report coveralls:report
+
 env:
   global:
-    secure: Mk9R22zfJjqIesytmFYx1wuOiWJDxTuKr5vcSgX26Q4GViMeMW1McbvLjl36PnSjdREhfQMwiqNAVmWUtkhh3+2MQAdWpGW88S25Jw9jWDdJlfKyxZBCzWJ1Smo1utr9J+BdSGR9GVmqLxMHMy6TJ4uUkHwzmCX9zD2B+tgEONg=
+  # COVERALLS_TOKEN
+  - secure: Mk9R22zfJjqIesytmFYx1wuOiWJDxTuKr5vcSgX26Q4GViMeMW1McbvLjl36PnSjdREhfQMwiqNAVmWUtkhh3+2MQAdWpGW88S25Jw9jWDdJlfKyxZBCzWJ1Smo1utr9J+BdSGR9GVmqLxMHMy6TJ4uUkHwzmCX9zD2B+tgEONg=
+  # COVERITY_SCAN_TOKEN
+  - secure: PMDDmkZsHLRxAxRGtJ/Ar99VXC6K+2erU1FP7e9zMSXDvzXN+TUiOX7Tp42cCeqHLLSX3Mue9di6d6/GSeaXfLpJOPEvGzH4atznmaAz0Z0muFBKk++ApMN11oBlPsDAbSAwkR8ef4kbQQ/Aep58rztpTSei2n8lcOsuzpPkrz0=
+
+addons:
+  coverity_scan:
+    project:
+      name: "sebhoss/github-maven-extension"
+      description: "Build submitted via Travis CI"
+    notification_email: mail@shoss.de
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: master
