@@ -15,7 +15,7 @@
   </custom>
 
   <bannerLeft>
-    <name>Maven GitHub Extension</name>
+    <name>GitHub Maven Extension</name>
     <href>http://sebhoss.github.io/github-maven-extension</href>
   </bannerLeft>
 

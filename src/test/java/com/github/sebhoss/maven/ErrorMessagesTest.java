@@ -10,12 +10,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests for {@link ErrorMessages}
+ * Tests for ErrorMessages
  */
 public class ErrorMessagesTest {
 
     /**
-     * Checks that an instance of {@link ErrorMessages} can be created.
+     * Checks that an instance of ErrorMessages can be created.
      */
     @Test
     @SuppressWarnings("static-method")

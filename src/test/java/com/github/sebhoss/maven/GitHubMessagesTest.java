@@ -10,12 +10,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Tests for {@link GitHubMessages}
+ * Tests for GitHubMessages
  */
 public class GitHubMessagesTest {
 
     /**
-     * Checks that an instance of {@link GitHubMessages} can be created.
+     * Checks that an instance of GitHubMessages can be created.
      */
     @Test
     @SuppressWarnings("static-method")

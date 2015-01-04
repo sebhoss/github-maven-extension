@@ -34,7 +34,7 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
 
     private MavenProject                  project;
 
-    @Parameter(property = "github.organization.name", defaultValue = "${project.organization.name}")
+    @Parameter(defaultValue = "${project.organization.name}", required = true)
     private String                        organizationName;
 
     @Override
@@ -122,6 +122,9 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
     private String organizationName() {
         if (organizationName != null) {
             return organizationName;
+        }
+        if (project.getOrganization() != null) {
+            return project.getOrganization().getName();
         }
 
         throw new NullPointerException(getProperty(ErrorMessages.NO_ORGANIZATION_NAME));

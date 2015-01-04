@@ -8,6 +8,7 @@ package com.github.sebhoss.maven;
 
 import org.apache.maven.MavenExecutionException;
 import org.apache.maven.execution.MavenSession;
+import org.apache.maven.model.Organization;
 import org.apache.maven.project.MavenProject;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,7 +19,7 @@ import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 
 /**
- * Tests for {@link GitHubLifecycleParticipant}
+ * Tests for GitHubLifecycleParticipant
  */
 public class GitHubLifecycleParticipantTest {
 
@@ -118,7 +119,7 @@ public class GitHubLifecycleParticipantTest {
 
     /**
      * Checks that the extension can't run without a configured organizatio name.
-     * 
+     *
      * @throws MavenExecutionException
      *             In case something went wrong with the maven execution
      */
@@ -132,6 +133,28 @@ public class GitHubLifecycleParticipantTest {
 
         // then
         gitHubLifecycleParticipant.afterProjectsRead(mavenSession);
+    }
+
+    /**
+     * Checks that the configured POM organization name (<code>${project.organization.name}</code>) is used as a
+     * fallback in case the extension was not configured itself.
+     *
+     * @throws MavenExecutionException
+     *             In case something went wrong with the maven execution
+     */
+    @Test
+    public void shouldUsePOMOrganizationNameAsFallback() throws MavenExecutionException {
+        // given
+        gitHubLifecycleParticipant.setOrganizationName(null);
+        final Organization organization = new Organization();
+        organization.setName(ORGANIZATION_NAME);
+        mavenProject.setOrganization(organization);
+
+        // when
+        gitHubLifecycleParticipant.afterProjectsRead(mavenSession);
+
+        // then
+        Assert.assertEquals(GITHUB_PROJECT_URL, mavenProject.getUrl());
     }
 
 }
