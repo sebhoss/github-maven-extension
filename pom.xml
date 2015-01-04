@@ -24,7 +24,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <groupId>com.sebhoss.maven</groupId>
   <artifactId>github-maven-extension</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
   <inceptionYear>2015</inceptionYear>
   <url>http://sebhoss.github.io/github-maven-extension</url>
