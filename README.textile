@@ -1,5 +1,5 @@
 h1. github-maven-extension
 
-h2. "!https://img.shields.io/maven-central/v/com.github.sebhoss/github-maven-extension.svg?style=flat-square!":https://maven-badges.herokuapp.com/maven-central/com.github.sebhoss/github-maven-extension "!https://img.shields.io/travis/sebhoss/github-maven-extension/master.svg?style=flat-square!":http://travis-ci.org/sebhoss/github-maven-extension
+h2. "!https://www.ohloh.net/p/github-maven-extension/widgets/project_thin_badge.gif!":https://www.ohloh.net/p/github-maven-extension/ "!https://img.shields.io/maven-central/v/com.github.sebhoss/github-maven-extension.svg?style=flat-square!":https://maven-badges.herokuapp.com/maven-central/com.github.sebhoss/github-maven-extension "!https://img.shields.io/travis/sebhoss/github-maven-extension/master.svg?style=flat-square!":http://travis-ci.org/sebhoss/github-maven-extension "!https://img.shields.io/coveralls/sebhoss/github-maven-extension/master.svg?style=flat-square!":https://coveralls.io/r/sebhoss/github-maven-extension
 
 p. Configures common settings found in Maven projects on GitHub. For more information take a look at the "project documentation":http://sebhoss.github.io/github-maven-extension
