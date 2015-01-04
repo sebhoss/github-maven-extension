@@ -11,11 +11,11 @@ import ch.qos.cal10n.Locale;
 import ch.qos.cal10n.LocaleData;
 
 /**
- * i18n keys
+ * i18n keys for GitHub messages
  */
-@BaseName("constants")
+@BaseName("github")
 @LocaleData(defaultCharset = "UTF8", value = @Locale("en"))
-public enum Constants {
+public enum GitHubMessages {
 
     /**
      * Constant for <code>project.issueManagement.system</code>

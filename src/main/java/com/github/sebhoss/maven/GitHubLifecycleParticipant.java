@@ -11,6 +11,8 @@ import java.util.Locale;
 import ch.qos.cal10n.IMessageConveyor;
 import ch.qos.cal10n.MessageConveyor;
 
+import com.google.common.base.Preconditions;
+
 import org.apache.maven.AbstractMavenLifecycleParticipant;
 import org.apache.maven.MavenExecutionException;
 import org.apache.maven.execution.MavenSession;
@@ -20,6 +22,7 @@ import org.apache.maven.model.IssueManagement;
 import org.apache.maven.model.Organization;
 import org.apache.maven.model.Scm;
 import org.apache.maven.model.Site;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.component.annotations.Component;
 
@@ -32,6 +35,9 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
     private static final IMessageConveyor messages = new MessageConveyor(Locale.ENGLISH);
 
     private MavenProject                  project;
+
+    @Parameter(property = "github.organization.name", defaultValue = "${project.organization.name}")
+    private String                        organizationName;
 
     @Override
     public void afterProjectsRead(final MavenSession session) throws MavenExecutionException {
@@ -47,7 +53,7 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
 
     private void updateProject() {
         if (project.getUrl() == null || project.getUrl().isEmpty()) {
-            project.setUrl(getProperty(Constants.URL, organizationName(), artifactId()));
+            project.setUrl(getProperty(GitHubMessages.URL, organizationName(), artifactId()));
         }
     }
 
@@ -57,7 +63,7 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
             organization = new Organization();
         }
         if (organization.getUrl() == null || organization.getUrl().isEmpty()) {
-            organization.setUrl(getProperty(Constants.ORGANIZATION_URL, organization.getName()));
+            organization.setUrl(getProperty(GitHubMessages.ORGANIZATION_URL, organizationName()));
         }
         project.setOrganization(organization);
     }
@@ -67,8 +73,8 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
 
         if (issueManagement == null) {
             issueManagement = new IssueManagement();
-            issueManagement.setSystem(getProperty(Constants.ISSUE_MANAGEMENT_SYSTEM));
-            issueManagement.setUrl(getProperty(Constants.ISSUE_MANAGEMENT_URL, organizationName(), artifactId()));
+            issueManagement.setSystem(getProperty(GitHubMessages.ISSUE_MANAGEMENT_SYSTEM));
+            issueManagement.setUrl(getProperty(GitHubMessages.ISSUE_MANAGEMENT_URL, organizationName(), artifactId()));
             project.setIssueManagement(issueManagement);
         }
     }
@@ -78,10 +84,10 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
 
         if (scm == null) {
             scm = new Scm();
-            scm.setConnection(getProperty(Constants.SCM_CONNECTION, organizationName(), artifactId()));
-            scm.setDeveloperConnection(getProperty(Constants.SCM_DEVELOPER_CONNECTION, organizationName(), artifactId()));
-            scm.setTag(getProperty(Constants.SCM_TAG));
-            scm.setUrl(getProperty(Constants.SCM_URL, organizationName(), artifactId()));
+            scm.setConnection(getProperty(GitHubMessages.SCM_CONNECTION, organizationName(), artifactId()));
+            scm.setDeveloperConnection(getProperty(GitHubMessages.SCM_DEVELOPER_CONNECTION, organizationName(), artifactId()));
+            scm.setTag(getProperty(GitHubMessages.SCM_TAG));
+            scm.setUrl(getProperty(GitHubMessages.SCM_URL, organizationName(), artifactId()));
             project.setScm(scm);
         }
     }
@@ -91,8 +97,8 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
 
         if (ciManagement == null) {
             ciManagement = new CiManagement();
-            ciManagement.setSystem(getProperty(Constants.CI_MANAGEMENT_SYSTEM));
-            ciManagement.setUrl(getProperty(Constants.CI_MANAGEMENT_URL, organizationName(), artifactId()));
+            ciManagement.setSystem(getProperty(GitHubMessages.CI_MANAGEMENT_SYSTEM));
+            ciManagement.setUrl(getProperty(GitHubMessages.CI_MANAGEMENT_URL, organizationName(), artifactId()));
             project.setCiManagement(ciManagement);
         }
     }
@@ -106,8 +112,8 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
         Site site = distributionManagement.getSite();
         if (site == null) {
             site = new Site();
-            site.setId(getProperty(Constants.DISTRIBUTION_MANAGEMENT_SITE_ID));
-            site.setUrl(getProperty(Constants.DISTRIBUTION_MANAGEMENT_SITE_URL));
+            site.setId(getProperty(GitHubMessages.DISTRIBUTION_MANAGEMENT_SITE_ID));
+            site.setUrl(getProperty(GitHubMessages.DISTRIBUTION_MANAGEMENT_SITE_URL));
             distributionManagement.setSite(site);
         }
 
@@ -115,15 +121,30 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
     }
 
     private String organizationName() {
-        return project.getOrganization().getName();
+        return Preconditions.checkNotNull(organizationName, getProperty(ErrorMessages.NO_ORGANIZATION_NAME));
     }
 
     private String artifactId() {
         return project.getArtifactId();
     }
 
-    private static String getProperty(final Constants key, final Object... args) {
+    private static <E extends Enum<?>> String getProperty(final E key, final Object... args) {
         return messages.getMessage(key, args);
+    }
+
+    /**
+     * @return The configuration GitHub organization name
+     */
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    /**
+     * @param organizationName
+     *            The GitHub organization name to use
+     */
+    public void setOrganizationName(final String organizationName) {
+        this.organizationName = organizationName;
     }
 
 }
