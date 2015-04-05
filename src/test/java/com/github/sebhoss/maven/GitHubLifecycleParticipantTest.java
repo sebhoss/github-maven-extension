@@ -42,7 +42,6 @@ public class GitHubLifecycleParticipantTest {
     @Before
     public void setUp() {
         gitHubLifecycleParticipant = new GitHubLifecycleParticipant();
-        gitHubLifecycleParticipant.setOrganizationName(ORGANIZATION_NAME);
 
         mavenSession = Mockito.mock(MavenSession.class);
         mavenProject = new MavenProject();
@@ -103,18 +102,6 @@ public class GitHubLifecycleParticipantTest {
 
         // then
         Assert.assertEquals(GITHUB_PROJECT_URL, mavenProject.getUrl());
-    }
-
-    /**
-     * Checks that the configured organization name is returned.
-     */
-    @Test
-    public void shouldGetConfigurationOrganizationName() {
-        // when
-        final String organizationName = gitHubLifecycleParticipant.getOrganizationName();
-
-        // then
-        Assert.assertEquals(ORGANIZATION_NAME, organizationName);
     }
 
     /**

@@ -20,7 +20,6 @@ import org.apache.maven.model.IssueManagement;
 import org.apache.maven.model.Organization;
 import org.apache.maven.model.Scm;
 import org.apache.maven.model.Site;
-import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.component.annotations.Component;
 
@@ -33,9 +32,6 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
     private static final IMessageConveyor messages = new MessageConveyor(Locale.ENGLISH);
 
     private MavenProject                  project;
-
-    @Parameter(defaultValue = "${project.organization.name}", required = true)
-    private String                        organizationName;
 
     @Override
     public void afterProjectsRead(final MavenSession session) throws MavenExecutionException {
@@ -120,9 +116,6 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
     }
 
     private String organizationName() {
-        if (organizationName != null) {
-            return organizationName;
-        }
         if (project.getOrganization() != null) {
             return project.getOrganization().getName();
         }
@@ -136,21 +129,6 @@ public class GitHubLifecycleParticipant extends AbstractMavenLifecycleParticipan
 
     private static <E extends Enum<?>> String getProperty(final E key, final Object... args) {
         return messages.getMessage(key, args);
-    }
-
-    /**
-     * @return The configuration GitHub organization name
-     */
-    public String getOrganizationName() {
-        return organizationName;
-    }
-
-    /**
-     * @param organizationName
-     *            The GitHub organization name to use
-     */
-    public void setOrganizationName(final String organizationName) {
-        this.organizationName = organizationName;
     }
 
 }
